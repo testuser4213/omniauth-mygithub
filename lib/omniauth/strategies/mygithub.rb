@@ -21,7 +21,9 @@ module OmniAuth
       end
 
       extra do
-        { raw_info: raw_info }
+        hash = {}
+        hash['raw_info'] = raw_info unless skip_info?
+        hash
       end
 
       def authorize_params
