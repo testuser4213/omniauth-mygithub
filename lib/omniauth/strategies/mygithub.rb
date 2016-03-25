@@ -24,6 +24,16 @@ module OmniAuth
         { raw_info: raw_info }
       end
 
+      def authorize_params
+        super.tap do |params|
+          %w[scope].each do |v|
+            if request.params[v]
+              params[v.to_sym] = request.params[v]
+            end
+          end
+        end
+      end
+
       def primary_email
         primary = emails.find { |email| email['primary'] && email['verified'] }
         primary && primary['email'] || nil
